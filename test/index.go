@@ -1,111 +1,112 @@
-package go_validate
+package main
 
 import (
 	"fmt"
+
+	gv "github.com/nakatsuji-masato/go-validate"
 )
 
-var TestValidate = Validate{
-	Rules: ValidateRulesMaps{
+var TestValidate = gv.Validate{ // Line 7
+	Rules: gv.ValidateRulesMaps{ // Line 8
 		"username": {
 			{
-				Rule:    Required,
+				Rule:    gv.Required,
 				Message: "username is empty",
 			},
 			{
-				Rule:    LengthMin,
+				Rule:    gv.LengthMin,
 				Data:    []interface{}{4},
 				Message: "username under 4 character length.",
 			},
 			{
-				Rule:    LengthMax,
+				Rule:    gv.LengthMax,
 				Data:    []interface{}{30},
 				Message: "username over 30 character length.",
 			},
 		},
 		"password": {
 			{
-				Rule:    Required,
+				Rule:    gv.Required,
 				Message: "password is empty",
 			},
 			{
-				Rule:    LengthMin,
+				Rule:    gv.LengthMin,
 				Data:    []interface{}{4},
 				Message: "password under 4 character length.",
 			},
 			{
-				Rule:    LengthMax,
+				Rule:    gv.LengthMax,
 				Data:    []interface{}{30},
 				Message: "password over 30 character length.",
 			},
 		},
 		"email": {
 			{
-				Rule:    Required,
+				Rule:    gv.Required,
 				Message: "Email is empty",
 			},
 			{
-				Rule: LengthBetween,
+				Rule: gv.LengthBetween,
 				Data: []interface{}{4, 20},
 			},
 		},
 		"age": {
 			{
-				Rule:    ValueMin,
+				Rule:    gv.ValueMin,
 				Data:    []interface{}{5},
 				Message: "age is under 5",
 			},
 			{
-				Rule:    ValueMax,
+				Rule:    gv.ValueMax,
 				Data:    []interface{}{20},
 				Message: "age is over 20",
 			},
 		},
 		"number": {
 			{
-
-				Rule:    Numeric,
+				Rule:    gv.Numeric,
 				Data:    []interface{}{"abc"},
 				Message: "numeric error",
 			},
 		},
 		"json": {
 			{
-				Rule:    TypeJSON,
+				Rule:    gv.TypeJSON,
 				Message: "JSONではない",
 			},
 		},
 		"select": {
 			{
-				Rule:    Selected,
+				Rule:    gv.Selected,
 				Data:    []interface{}{"mikan", "ringo", "kiwi"},
 				Message: "選択肢以外の値が入力されています。",
 			},
 		},
 		"selectMin": {
 			{
-				Rule:    SelectLengthMin,
+				Rule:    gv.SelectLengthMin,
 				Data:    []interface{}{3},
 				Message: "最低でも3つは選択してください",
 			},
 		},
 		"selectMax": {
 			{
-				Rule:    SelectLengthMax,
+				Rule:    gv.SelectLengthMax,
 				Data:    []interface{}{6},
 				Message: "最大6つまでしか選択できません",
 			},
 		},
 		"selectBetween": {
 			{
-				Rule:    SelectLengthBetween,
+				Rule:    gv.SelectLengthBetween,
 				Data:    []interface{}{2, 4},
 				Message: "2-4の範囲で選択してください",
 			},
 		},
 		"custom": {
 			{
-				Rule: Custom,
-				Data: []interface{}{func(value any) bool {
+				Rule: gv.Custom,
+				Data: []interface{}{func(value any, postData map[string]interface{}) bool {
 					if value.(string) == "custom message" {
 						return true
 					}
@@ -140,4 +141,9 @@ func VerifyTest() {
 
 	fmt.Println(vres.Status)
 	fmt.Println(vres.ValidateErrors)
+}
+
+func main() {
+	VerifyTest()
+
 }

@@ -227,12 +227,12 @@ func ruleSelectLengthBetween(value any, data []interface{}) bool {
 }
 
 // Rule Custom
-func ruleCustom(value any, data []interface{}) bool {
+func ruleCustom(value any, data []interface{}, postData map[string]interface{}) bool {
 	if value == nil || value == "" {
 		return true
 	}
-	fn := data[0].(func(any) bool)
-	if fn(value) == false {
+	fn := data[0].(func(any, map[string]interface{}) bool)
+	if fn(value, postData) == false {
 		return false
 	}
 	return true

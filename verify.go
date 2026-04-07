@@ -68,7 +68,7 @@ func (v *Validate) Verify(post interface{}) ValidateResponse {
 			case SelectLengthBetween:
 				judge_ = ruleSelectLengthBetween(val, r_.Data)
 			case Custom:
-				judge_ = ruleCustom(val, r_.Data)
+				judge_ = ruleCustom(val, r_.Data, postMap)
 			}
 
 			if judge_ == false {
